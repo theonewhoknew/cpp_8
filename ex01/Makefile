@@ -1,5 +1,5 @@
-NAME = easyfind
-SRC = $(addprefix $(DIR_SRC), main.cpp)
+NAME = span
+SRC = $(addprefix $(DIR_SRC), main.cpp Span.cpp)
 FLAGS = -std=c++98 -Wall -Wextra -Werror
 DEPFLAGS = -MMD -MP
 DIR_OBJ = tmp/
