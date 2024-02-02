@@ -1,14 +1,14 @@
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
+# include <list>
 # include <algorithm>
-# include <vector>
 # include <exception>
 
 class Span
 {	
 	private:
-		std::vector<int> 	*_v;
+		std::list<int> 		*_l;
 		unsigned int		_n;
 		unsigned int		*_fill;
 
@@ -20,8 +20,11 @@ class Span
 		~Span();
 
 		void 	addNumber(int n);
+		void	addNumberRange(int n, unsigned int start, unsigned int end);
 		unsigned int	shortestSpan();
 		unsigned int	longestSpan();
+
+		void	print();
 
 		class OutOfBoundsException : public std::exception
 		{

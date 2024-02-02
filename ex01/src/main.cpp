@@ -52,6 +52,23 @@ int main()
 			std::cerr << e.what() << '\n';
 		}
 	}
+	{
+		try
+		{
+			Span a(10);
+
+			a.addNumberRange(10, 0, 10);
+			a.print();
+			a.addNumberRange(5, 3, 6);
+			a.print();
+
+		}
+		catch(const std::exception& e)
+		{
+			std::cerr << e.what() << '\n';
+		}
+		
+	}
 
 	return 0;
 }
