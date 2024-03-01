@@ -4,22 +4,26 @@
 #include <stack>
 #include <deque>
 
-template <typename T, typename Container = std::deque<T>>
+template <typename T>
 class MutantStack : public std::stack<T>
 {
+		public:
 
-	public:
+			MutantStack(void) {};
+			MutantStack(MutantStack &copy) : std::stack<T>(copy) {};
+			MutantStack& operator=(const MutantStack &instance) {};
+			~MutantStack(void) {};
 
-		typename Container::iterator begin() 
-		{
-        	return this->c.begin();
-    	}
+			typedef typename std::deque<T>::iterator iterator;
+			iterator begin()
+			{
+				return this->c.begin();
+			}
 
-   		typename Container::iterator end() 
-		{
-        	return this->c.end();
-    	}
-
+			iterator end()
+			{
+				return this->c.end();
+			}
 };
 
 #endif
