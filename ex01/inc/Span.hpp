@@ -1,16 +1,15 @@
 #ifndef SPAN_HPP
 # define SPAN_HPP
 
-# include <list>
+# include <vector>
 # include <algorithm>
 # include <exception>
 
 class Span
 {	
 	private:
-		std::list<int> 		*_l;
+		std::vector<int> 	_v;
 		unsigned int		_n;
-		unsigned int		*_fill;
 
 	public:
 		Span();
@@ -20,7 +19,7 @@ class Span
 		~Span();
 
 		void 	addNumber(int n);
-		void	addNumberRange(int n, unsigned int start, unsigned int end);
+		void	addNumberRange(std::vector<int>::iterator start, std::vector<int>::iterator end);
 		unsigned int	shortestSpan();
 		unsigned int	longestSpan();
 

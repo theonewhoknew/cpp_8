@@ -4,47 +4,37 @@
 Span::Span()
 {
 	_n = 0;
-	_l = new std::list<int>;
-	_fill = new unsigned int(0);
 }
 
 Span::Span(unsigned int n)
 {	
 	_n = n;
-	_l = new std::list<int>(n);
-	_fill = new unsigned int(0);
+	_v.reserve(n);
 }
 
 Span::Span(Span &copy)
 {
 	_n = copy._n;
-	_fill = new unsigned int(0);
-	*_fill = *copy._fill;
-	_l = new std::list<int>(copy._n);
-	for (unsigned int i = 0; i < *_fill; i++)
+	_v = copy._v;
+	for (unsigned int i = 0; i < _v.size(); i++)
 	{
-		_l[i] = copy._l[i];
+		_v[i] = copy._v[i];
 	}
 }
 
 Span& Span::operator=(const Span &instance)
-{
-	_n = instance._n;
-	delete _l;
-	delete _fill;
-	_fill = new unsigned int(0);
-	*_fill = *instance._fill;
-	_l = new std::list<int>(instance._n);
-	for (unsigned int i = 0; i < *_fill; i++)
+{	
+	if (this != &instance)
 	{
-		_l[i] = instance._l[i];
+		_n = instance._n;
+		_v = instance._v;
 	}
 	return (*this);
 }
 
 Span::~Span()
 {
-	delete _l;
+
 }
 
 const char *Span::OutOfBoundsException::what(void) const throw()
@@ -59,37 +49,17 @@ const char *Span::NoSpanException::what(void) const throw()
 
 void Span::addNumber(int n)
 {
-	if (*_fill == _n)
+	if (_v.size() == _n)
 		throw OutOfBoundsException();
 	else
-	{
-		_l->push_back(n);
-		_l->erase(_l->begin());
-		(*_fill)++;
-	}
+		_v.push_back(n);
 }
 
-void Span::addNumberRange(int n, unsigned int start, unsigned int end)
-{	
-	std::list<int>::iterator it_start;
-	std::list<int>::iterator it_end;
-
-	it_start = _l->begin();
-	while (start)
+void Span::addNumberRange(std::vector<int>::iterator start, std::vector<int>::iterator end)
+{
+	for (std::vector<int>::iterator it = start; it != end; it++)
 	{
-		it_start++;
-		start--;
-	}
-	it_end = _l->end();
-	unsigned int tmp_n = _n;
-	while (tmp_n > end)
-	{
-		tmp_n--;
-		it_end--;
-	}
-	for(std::list<int>::iterator iter = it_start; iter != it_end; iter++)
-	{
-		*iter = n;
+		addNumber(*it);
 	}
 }
 
@@ -99,12 +69,13 @@ unsigned int Span::shortestSpan()
 	unsigned int	tmp = 0;
 	int				first = 1;
 
-	if (*_fill == 0 || *_fill == 1)
+	if (_v.size() == 0 || _v.size() == 1)
 		throw NoSpanException();
-	_l->sort();
-	for (std::list<int>::iterator iter = _l->begin(); iter != --_l->end(); iter++)
+	std::vector<int>sorted = _v;
+	std::sort(sorted.begin(), sorted.end());
+	for (std::vector<int>::iterator iter = sorted.begin(); iter != sorted.end() - 1; iter++)
 	{
-		std::list<int>::iterator iter_cpy = iter;
+		std::vector<int>::iterator iter_cpy = iter;
 		tmp = std::abs(*iter - *(++iter_cpy));
 		if (first)
 		{
@@ -119,15 +90,16 @@ unsigned int Span::shortestSpan()
 
 unsigned int Span::longestSpan()
 {
-	if (*_fill == 0 || *_fill == 1)
+	if (_v.size() == 0 || _v.size() == 1)
 		throw NoSpanException();
-	_l->sort();
-	return (std::abs(*_l->begin() - *(--_l->end())));
+	std::vector<int>sorted = _v;
+	std::sort(sorted.begin(), sorted.end());
+	return (std::abs(sorted.front() - sorted.back()));
 }
 
 void		Span::print()
 {
-	for (std::list<int>::iterator iter = _l->begin(); iter != _l->end(); iter++)
+	for (std::vector<int>::iterator iter = _v.begin(); iter != _v.end(); iter++)
 	{
 		std::cout << *iter << " ";
 	}
