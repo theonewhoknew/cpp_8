@@ -6,68 +6,77 @@ int main()
 {
 	/*MutantStack*/
 
-	MutantStack<int> mstack;
-	mstack.push(5);
-	mstack.push(17);
-	std::cout << "top element is: " << mstack.top() << std::endl;
-	mstack.pop();
-	std::cout << "size is: " << mstack.size() << std::endl;
-	mstack.push(3);
-	mstack.push(5);
-	mstack.push(737);
-	//[...]
-	mstack.push(0);
-
-	MutantStack<int>::iterator it = mstack.begin();
-	MutantStack<int>::iterator ite = mstack.end();
-	++it;
-	--it;
-	while (it != ite)
 	{
-		std::cout << *it << std::endl;
+		MutantStack<int> mstack;
+		mstack.push(5);
+		mstack.push(17);
+		mstack.print();
+		std::cout << "top element is: " << mstack.top() << std::endl;
+		mstack.pop();
+		std::cout << "size is: " << mstack.size() << std::endl;
+		mstack.push(3);
+		mstack.push(5);
+		mstack.push(737);
+		//[...]
+		mstack.push(0);
+
+		MutantStack<int>::iterator it = mstack.begin();
+		MutantStack<int>::iterator ite = mstack.end();
 		++it;
+		--it;
+		while (it != ite)
+		{
+			std::cout << *it << std::endl;
+			++it;
+		}
+		std::stack<int> s(mstack);
+
+		std::cout << "new stack test" << std::endl << std::endl;
+
+		MutantStack<int>mstack_2(mstack);
+
+		mstack_2.print();
+
+		mstack.pop();
+		mstack.pop();
+		mstack.pop();
+
+		std::cout << "first stack after change" << std::endl << std::endl;
+
+		it = mstack.begin();
+		ite = mstack.end();
+
+		while (it != ite)
+		{
+			std::cout << *it << std::endl;
+			++it;
+		}
+
+		std::cout << "second stack after change" << std::endl << std::endl;
+
+		mstack_2.print();
 	}
-	std::stack<int> s(mstack);
 
-	std::cout << "new stack test" << std::endl << std::endl;
-
-	MutantStack<int>mstack_2(mstack);
-
-	MutantStack<int>::iterator it_b = mstack_2.begin();
-	MutantStack<int>::iterator ite_b = mstack_2.end();
-
-	while (it_b != ite_b)
 	{
-		std::cout << *it_b << std::endl;
-		++it_b;
+		std::cout << std::endl;
+
+		MutantStack<int> a;
+
+		a.push(42);
+		std::cout << "a is: ";
+		a.print();
+
+		MutantStack<int> b;
+
+		b.push(100);
+		std::cout << "b is: ";
+		b.print();
+
+		a = b;
+		std::cout << "a after assigment is: ";
+		a.print();
+
 	}
-
-	mstack.pop();
-	mstack.pop();
-	mstack.pop();
-
-	std::cout << "first stack after change" << std::endl << std::endl;
-
-	it = mstack.begin();
-	ite = mstack.end();
-
-	while (it != ite)
-	{
-		std::cout << *it << std::endl;
-		++it;
-	}
-
-	std::cout << "second stack after change" << std::endl << std::endl;
-
-	it_b = mstack_2.begin();
-	ite_b = mstack_2.end();
-
-	while (it_b != ite_b)
-	{
-		std::cout << *it_b << std::endl;
-		++it_b;
-	}
-
 	return 0;
 
 	/*LIST*/
